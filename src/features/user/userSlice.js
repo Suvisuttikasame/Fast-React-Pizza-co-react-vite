@@ -15,18 +15,21 @@ function getPosition() {
   });
 }
 
-const fetchAddress = createAsyncThunk("user/fetchAddress", async function () {
-  const positionObj = await getPosition();
-  const position = {
-    latitude: positionObj.coords.latitude,
-    longtitude: positionObj.coords.longtitude,
-  };
+export const fetchAddress = createAsyncThunk(
+  "user/fetchAddress",
+  async function () {
+    const positionObj = await getPosition();
+    const position = {
+      latitude: positionObj.coords.latitude,
+      longtitude: positionObj.coords.longitude,
+    };
 
-  const addressObj = await getAddress(position);
-  const address = `${addressObj?.locality}, ${addressObj?.city}, ${addressObj?.postcode}, ${addressObj?.countryName}`;
+    const addressObj = await getAddress(position);
+    const address = `${addressObj?.locality}, ${addressObj?.city}, ${addressObj?.postcode}, ${addressObj?.countryName}`;
 
-  return { position, address };
-});
+    return { position, address };
+  },
+);
 export const userSlice = createSlice({
   name: "user",
   initialState,
